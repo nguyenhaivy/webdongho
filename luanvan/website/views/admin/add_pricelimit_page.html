@@ -1,0 +1,110 @@
+{% extends './base.html' %}
+{% block content %}
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Khoảng Giá</h4>
+        </div>
+        <section class="section">
+            <div class="row" id="table-hover-row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            
+                            <!-- table hover -->
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã Khoảng Giá</th>
+                                            <th>Tên Khoảng Giá</th>
+                                            <th>Url</th>
+                                            <th>Thời gian tạo</th>
+                                            <th>Thời gian cập nhật</th>
+                                            <th>Chức năng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in list_price_limit %}
+                                        <tr>
+                                            <td>{{i.price_id}}</td>
+                                            <td class="text-bold-500">{{i.price_limit_name}}</td>
+                                            <td>{{i.url}}</td>
+                                            <td>{{i.creation_time}}</td>
+                                            <td>{{i.update_time}}</td>
+                                            <td>
+                                                <a class="ms-2" href="{% url 'delete_price_limit_page' pk=i.price_id %}">
+                                                    <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                      <path fill="red" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                                                  </a>
+                                                  <a  class="add_data  ms-2" data-price-limit-name="{{i.price_limit_name}}" data-url="{{i.url}}" data-id="{{i.price_id}}">
+                                                    <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                      <path fill="blue" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
+                                                  </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="form_update" style="display:none;" class="position-absolute top-0 start-0 bottom-0 end-0 bg-dark bg-opacity-75">
+            <form id="form_update_f" class="card-body" method="POST" action="{% url 'update_price_limit_page' %}" style="width: 600px;">
+                {% csrf_token %}
+                <input id="id_update" name="id_update" type="hidden" />
+                <div class="row">
+                    <div class="col text-light">
+                        <div class="form-group">
+                            <label for="basicInput" >Mức Giá</label>
+                            <input type="text" class="form-control" id="price_limit_name_update" name="price_limit_name_update" placeholder="Nhập tên loại máy" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="basicInput">Url</label>
+                            <input type="text" class="form-control" id="url_update" name="url_update" placeholder="Nhập đường dẫn" required="">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" role="button">Cập nhật</button>
+                            <a id="close_form_update" class="btn btn-secondary"  role="button">Hủy</a>
+                        </div>
+                    </div> 
+                </div>
+            </form>
+        </div>
+        <form class="card-body" method="POST" action="{% url 'add_price_limit_page' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="basicInput">Tên Khoảng Giá</label>
+                        <input type="text" class="form-control" id="basicInput" name="price_limit_name" placeholder="Nhập khoảng giá">
+                    </div>
+                    <div class="form-group">
+                        <label for="basicInput">Url</label>
+                        <input type="text" class="form-control" id="basicInput" name="url" placeholder="Nhập đường dẫn">
+                    </div>
+                    <button type="submit" class="btn btn-primary" href="/add-price-limit-page/" role="button">Thêm</button>
+
+                </div> 
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function() {
+        $('.add_data').on('click', function() {
+            $("#id_update").val($(this).data("id"));
+            $("#price_limit_name_update").val($(this).data("price_limit_name"));
+            $("#url_update").val($(this).data("url"));
+            $('#form_update').fadeIn("slow"); // Hiển thị form với hiệu ứng hiển thị từ mờ dần
+        });
+    
+        $('#close_form_update').on('click', function() {
+            $('#form_update').fadeOut("slow"); // Ẩn form với hiệu ứng biến mất từ rõ dần
+        });
+    });
+</script>
+{% endblock %}

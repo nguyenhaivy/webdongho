@@ -1,0 +1,245 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="page-heading position-relative">
+  <div class="page-title mb-2">
+      <div class="row">
+          <div class="order-md-1 order-last">
+          </div>
+      </div>
+  </div>
+  <!-- Hoverable rows start -->
+  <section class="section">
+      <div class="row" id="table-hover-row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-content">
+                      
+                      <!-- table hover -->
+                      <div class="table-responsive">
+                          <table class="table table-hover mb-0">
+                              <thead>
+                                <tr>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Đồng Hồ Trả góp</th>
+                                    <th>Số CCCD</th>
+                                    <th>Số điện thoại khách hàng</th>
+                                    <th>Số Kỳ</th>
+                                    <th>Phần Trăm Trả Trước</th>
+                                    <th>Tổng Tiền Phải Trả</th>
+                                    <th>Số Tiền Mỗi Kỳ</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Duyệt</th>
+                                    <th>Tác vụ</th>
+                                    
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for i in list_installment %}
+                                  <tr>
+                                    <td>{{i.user_name}}</td>
+                                    <td>
+                                    <a href="{% url 'detail_clock_page' pk=i.clock_id.pk  %}">
+                                        <img width="100px" src="{{ i.clock_id.list_image_clock.all.first.image.url }}" alt="Clock Image"/>
+                                    </a>
+                                    </td>
+                                    <td>{{i.user_IDcard}}</td>
+                                    <td>{{i.user_phone}}</td>
+                                    <td>{{i.number_of_payments}}</td>
+                                    <td>{{i.down_payment}}({{i.down_payment_discount}}%)</td>
+                                    <td>{{i.total_amount}}</td>
+                                    <td>{{i.amount_of_payment}}</td>
+                                    <td>{{i.status}}</td>
+                                    <td>
+                                    <a href="{% url 'installment_order_detail' pk=i.installment_id %}"> Chi Tiết Hồ Sơ </a>
+                                    </td>
+                                    <td>
+                                    <a class="ms-2" href="{% url 'delete_installment_page' pk=i.installment_id %}">
+                                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <path fill="red" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                                    </a>
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- Hoverable rows end -->
+  {% comment %} <div id="form_update" style="display:none;" class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center bg-dark bg-opacity-75">
+    <form id="form_update_f" class="card-body bg-light p-4" enctype="multipart/form-data" method="POST" action="{% url 'update_clock_page' %}" style="width: 600px;">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="basicInput">Tên Đồng Hồ</label>
+          <input type="text" class="form-control" id="basicInput" name="clock_name" placeholder="Nhập tên đồng hồ">
+      </div>
+
+      <div class="form-group">
+          <label for="helpInputTop">Mô Tả</label>
+          <textarea type="text" class="form-control" name="describe" id="helpInputTop"></textarea>
+      </div>
+
+      <div class="form-group">
+          <label for="helperText">Danh Mục</label>
+          <select class="form-select" name="categories" aria-label="Default select example">
+              <option selected>Chọn Danh Mục</option>
+              {% for i in list_category %}
+              <option value="{{i.categories_id}}">{{i.categories_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+      
+      <div class="form-group">
+          <label for="helperText">Nhãn Hiệu</label>
+          <select class="form-select" name="trademark" aria-label="Default select example">
+              <option selected>Chọn Nhãn Hiệu</option>
+              {% for i in list_trademark %}    
+              <option value="{{i.trademark_id}}">{{i.trademark_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+
+      <div class="form-group">
+          <label for="helperText">Khoảng giá</label>
+          <select class="form-select" name="price_limit" aria-label="Default select example">
+              <option selected>Chọn Khoảng giá</option>
+              {% for i in list_price_limit %}
+              <option value="{{i.price_id}}">{{i.price_limit_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+
+      <div class="form-group">
+          <label for="helperText">Loại Máy</label>
+          <select class="form-select" name="machine_type" aria-label="Default select example">
+              <option selected>Chọn Loại Máy</option>
+          {% for i in list_machine_type %}   
+              <option value="{{i.machine_type_id}}">{{i.machine_type_name}}</option>
+          {% endfor %}
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="helperText">Vật liệu dây</label>
+          <select class="form-select" name="wire_material" aria-label="Default select example">
+              <option selected>Chọn Vật liệu dây</option>
+              {% for i in list_wire_material %}
+              <option value="{{i.wire_material_id}}">{{i.wire_material_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+
+      <div class="form-group">
+          <label for="helperText">Giá</label>
+          <input type="text" id="helperText" name="price" class="form-control" placeholder="Nhập Giá">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Số lượng</label>
+          <input type="text" id="helperText" name="quantity" class="form-control" placeholder="Số lượng">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Giới Tính</label>
+          <select class="form-select" name="sex" aria-label="Default select example">
+              <option selected>Chọn Giới Tính</option>
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Nam và Nữ">Nam và Nữ</option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="helperText">Thiết Kế</label>
+          <input type="text" id="helperText" name="designs" class="form-control" placeholder="Nhập Thiết Kế">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Mặt kính</label>
+          <input type="text" id="helperText" name="glass_surface" class="form-control" placeholder="Nhập Mặt kính">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Đường kính</label>
+          <input type="text" id="helperText" name="diameter" class="form-control" placeholder="Nhập Đường kính">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Màu mặt</label>
+          <input type="text" id="helperText" name="face_color" class="form-control" placeholder="Nhập Màu mặt">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Chất liệu vỏ</label>
+          <input type="text" id="helperText" name="shell_material" class="form-control" placeholder="Nhập Chất liệu vỏ">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Độ chịu nước</label>
+          <input type="text" id="helperText" name="water_resistance" class="form-control" placeholder="Nhập">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Tính năng khác</label>
+          <input type="text" id="helperText" name="other_function" class="form-control" placeholder="Nhập Tính năng khác">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Xuất sứ thương hiệu</label>
+          <input type="text" id="helperText" name="brand_origin" class="form-control" placeholder="Nhập Xuất sứ thương hiệu">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Bảo hành chính hãng</label>
+          <input type="text" id="helperText" name="warranty_genuine" class="form-control" placeholder="Nhập Bảo hành chính hãng">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Phần trăm giảm giá</label>
+          <input type="text" id="helperText" name="percent_discount" class="form-control" placeholder="Nhập Phần trăm giảm giá">
+      </div>
+      <div class="form-group">
+          <label for="helperText">Đường dẫn</label>
+          <input type="text" id="helperText" name="url" class="form-control" placeholder="Nhập Đường dẫn">
+      </div>
+      <div class="form-group">
+          <label for="list_image">Ảnh sản phẩm</label>
+          <input type="file" multiple accept="image/*" class="form-control" id="list_image" name="list_image" >
+      </div>
+      <div class="form-group">
+          <label for="list_video">Video sản phẩm</label>
+          <input type="file" multiple accept="video/*" class="form-control" id="list_video" name="list_video" >
+      </div>
+      <div>
+          <button class="btn btn-primary" >Lưu</button>
+      </div>
+    </form>
+</div> {% endcomment %}
+</div>
+<script>
+  $(document).ready(function() {
+      $('.add_data').on('click', function() {
+
+          $("#clock_id_update").val($(this).data("clock-id"));
+          $("#clock_name_update").val($(this).data("clock-name"));
+          $("#describe_update").val($(this).data("describe"));
+          $("#categories_update").val($(this).data("categories"));
+          $("#trademark_update").val($(this).data("trademark"));
+          $("#price_limit_update").val($(this).data("price-limit"));
+          $("#machine_type_update").val($(this).data("machine-type"));
+          $("#wire_material_update").val($(this).data("wire-material"));
+          $("#price_update").val($(this).data("price"));
+          $("#quantity_update").val($(this).data("quantity"));
+          $("#sex_update").val($(this).data("sex"));
+          $("#designs_update").val($(this).data("designs"));
+          $("#glass_surface_update").val($(this).data("glass-surface"));
+          $("#diameter_update").val($(this).data("diameter"));
+          $("#face_color_update").val($(this).data("face-color"));
+          $("#shell_material_update").val($(this).data("shell-material"));
+          $("#water_resistance_update").val($(this).data("water-resistance"));
+          $("#other_function_update").val($(this).data("other-function"));
+          $("#brand_origin_update").val($(this).data("brand-origin"));
+          $("#warranty_genuine_update").val($(this).data("warranty-genuine"));
+          $("#percent_discount_update").val($(this).data("percent-discount"));
+          $("#price_has_decreased_update").val($(this).data("price-has-decreased"));
+          $("#url_update").val($(this).data("url"));
+
+          $('#form_update').fadeIn("slow"); // Hiển thị form với hiệu ứng hiển thị từ mờ dần
+      });
+
+      $('#close_form_update').on('click', function() {
+          $('#form_update').fadeOut("slow"); // Ẩn form với hiệu ứng biến mất từ rõ dần
+      });
+  });
+</script>
+{% endblock %}

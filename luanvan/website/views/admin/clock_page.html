@@ -1,0 +1,151 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="page-heading position-relative">
+    <div class="d-flex mb-2">
+        <a href="/add-categories-page/">Danh mục</a>
+        <a href="/add-trademark-page/" class="ms-2">Thương hiệu</a>
+        <a href="/add-price-limit-page/" class="ms-2">Khoảng giá</a>
+        <a href="/add-wire-material-page/" class="ms-2">Chất liệu</a>
+        <a href="/add-machine-type-page/" class="ms-2">Loại máy</a>
+    </div>
+    <div class="page-title mb-2">
+        <div class="row">
+            <div class="order-md-1 order-last">
+                <a href="/add-clock-page/"
+                    class="rounded bg-primary d-flex align-items-center justify-content-center fs-5 p-2 "
+                    style="width:220px">
+                    <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="white"
+                            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                    </svg>
+                    <span class="ms-1 text-light">Thêm Sản Phẩm</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Hoverable rows start -->
+    <section class="section">
+        <div class="row" id="table-hover-row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-content">
+
+                        <!-- table hover -->
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Tên Đồng Hồ</th>
+                                        <th>Giá Đồng Hồ</th>
+                                        <th>Ảnh Đại Diện</th>
+                                        <th>Số Lượng</th>
+                                        <th>Phần Trăm Giảm Giá</th>
+                                        <th>Chức Năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in clocks %}
+                                    <tr>
+                                        <td>{{i.clock_name}}</td>
+                                        <td>{{i.price_limit}}</td>
+                                        <td>
+                                            <img width="100px" src="{{i.list_image_clock.all.first.image.url}}" />
+                                        </td>
+                                        <td>{{i.quantity}}</td>
+                                        <td>{{i.percent_discount}}</td>
+                                        <td>
+                                            <a class="ms-2" href="{% url 'delete_clock_page' pk=i.clock_id %}">
+                                                <svg width="15" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 448 512">
+                                                    <path fill="red"
+                                                        d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                                                </svg>
+                                            </a>
+                                            <a class="add_data ms-2" href="{% url 'update_clock_page' pk=i.clock_id %}"
+                                                data-clock-id="{{i.clock_id}}" data-clock-name="{{i.clock_name}}"
+                                                data-describe="{{i.describe}}" data-categories="{{i.categories}}"
+                                                data-trademark="{{i.trademark}}" data-price-limit="{{i.price_limit}}"
+                                                data-machine-type="{{i.machine_type}}"
+                                                data-wire-material="{{i.wire_material}}" data-price="{{i.price}}"
+                                                data-quantity="{{i.quantity}}" data-sex="{{i.sex}}"
+                                                data-designs="{{i.designs}}" data-glass-surface="{{i.glass_surface}}"
+                                                data-diameter="{{i.diameter}}" data-face-color="{{i.face_color}}"
+                                                data-shell-material="{{i.shell_material}}"
+                                                data-water-resistance="{{i.water_resistance}}"
+                                                data-other-function="{{i.other_function}}"
+                                                data-brand-origin="{{i.brand_origin}}"
+                                                data-warranty-genuine="{{i.warranty_genuine}}"
+                                                data-percent-discount="{{i.percent_discount}}"
+                                                data-price-has-decreased="{{i.price_has_decreased}}"
+                                                data-url="{{i.url}}">
+                                                <svg width="15" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 512 512">
+                                                    <path fill="blue"
+                                                        d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hoverable rows end -->
+    <!-- Pagination links -->
+<div class="pagination">
+    <nav aria-label="Page navigation example" class="step-links">
+        <ul class="pagination">
+        {% if clocks.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">Trang Đầu</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ clocks.previous_page_number }}">Ngược Lại</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link current">{{ clocks.number }} / {{ clocks.paginator.num_pages }}</a></li>
+        {% if clocks.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ clocks.next_page_number }}">Tiếp Theo</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ clocks.paginator.num_pages }}">Trang Cuối</a></li>
+        {% endif %}
+        </ul>
+    </nav>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.add_data').on('click', function () {
+
+            $("#clock_id_update").val($(this).data("clock-id"));
+            $("#clock_name_update").val($(this).data("clock-name"));
+            $("#describe_update").val($(this).data("describe"));
+            $("#categories_update").val($(this).data("categories"));
+            $("#trademark_update").val($(this).data("trademark"));
+            $("#price_limit_update").val($(this).data("price-limit"));
+            $("#machine_type_update").val($(this).data("machine-type"));
+            $("#wire_material_update").val($(this).data("wire-material"));
+            $("#price_update").val($(this).data("price"));
+            $("#quantity_update").val($(this).data("quantity"));
+            $("#sex_update").val($(this).data("sex"));
+            $("#designs_update").val($(this).data("designs"));
+            $("#glass_surface_update").val($(this).data("glass-surface"));
+            $("#diameter_update").val($(this).data("diameter"));
+            $("#face_color_update").val($(this).data("face-color"));
+            $("#shell_material_update").val($(this).data("shell-material"));
+            $("#water_resistance_update").val($(this).data("water-resistance"));
+            $("#other_function_update").val($(this).data("other-function"));
+            $("#brand_origin_update").val($(this).data("brand-origin"));
+            $("#warranty_genuine_update").val($(this).data("warranty-genuine"));
+            $("#percent_discount_update").val($(this).data("percent-discount"));
+            $("#price_has_decreased_update").val($(this).data("price-has-decreased"));
+            $("#url_update").val($(this).data("url"));
+
+            $('#form_update').fadeIn("slow"); // Hiển thị form với hiệu ứng hiển thị từ mờ dần
+        });
+
+        $('#close_form_update').on('click', function () {
+            $('#form_update').fadeOut("slow"); // Ẩn form với hiệu ứng biến mất từ rõ dần
+        });
+    });
+</script>
+{% endblock %}

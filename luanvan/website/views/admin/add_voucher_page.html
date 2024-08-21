@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+{% block content %}
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Thêm Người Dùng</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <form class="col" method="post" enctype="multipart/form-data" action="{% url 'add_voucher_page' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="basicInput">Mã giảm giá</label>
+                        <input type="text" class="form-control" id="basicInput" name="promotions_code" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helpInputTop">Tên mã giảm giá</label>
+                        <input type="text" class="form-control" name="promotions_name" id="helpInputTop"></input>
+                    </div>
+                    <div class="form-group" >
+                        <label for="helpInputTop">Giá trị giảm giá</label>
+                        <input type="text" class="form-control" name="promotions_discount" id="helpInputTop"></input>
+                    </div>
+                    <div class="form-group" >
+                        <label for="helpInputTop">Phần trăm giảm</label>
+                        <input type="text" class="form-control" name="promotions_discount_percent" id="helpInputTop"></input>
+                    </div>
+                    <div class="form-group" >
+                        <label for="helpInputTop">Số lượng</label>
+                        <input type="text" class="form-control" name="amount" id="helpInputTop"></input>
+                    </div>
+                    <div class="form-group" >
+                        <label for="helpInputTop">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" name="start_time" id="helpInputTop"></input>
+                    </div>
+                    <div class="form-group" >
+                        <label for="helpInputTop">Ngày kết thúc</label>
+                        <input type="date" class="form-control" name="end_time" id="helpInputTop"></input>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" >Lưu</button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

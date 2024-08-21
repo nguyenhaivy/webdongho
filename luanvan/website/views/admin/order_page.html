@@ -1,0 +1,123 @@
+{% extends './base.html' %}
+{% block content %}
+<div class="page-heading position-relative">
+  <div class="page-title mb-2">
+  </div>
+  <!-- Hoverable rows start -->
+  <section class="section">
+      <div class="row" id="table-hover-row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-content">
+                      
+                      <!-- table hover -->
+                      <div class="table-responsive">
+                          <table class="table table-hover mb-0">
+                              <thead>
+                                  <tr>
+                                      <th>Mã đơn hàng</th>
+                                      <th>Tên Đăng Nhập</th>
+                                      <th>Tên Khách Hàng</th>
+                                      <th>Số Điện Thoại</th>
+                                      <th>Địa chỉ</th>
+                                      <th>Ghi chú</th>
+                                      <th>Tổng Số lượng sản phẩm</th>
+                                      <th>Tổng tiền</th>
+                                      <th>Trạng trái đơn hàng</th>
+                                      <th>Loại thanh toán</th>
+                                      <th>Chức năng</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                {% for i in orders %}
+                                  <tr>
+                                      <td>{{i.code}}</td>
+                                      <td>{{i.user_id.username}}</td>
+                                      <td>{{i.name}}</td>
+                                      <td>0{{i.phone}}</td>
+                                      <td>{{i.address}}</td>
+                                      <td>{{i.note}}</td>
+                                      <td>{{i.total_amount}}</td>
+                                      <td>{{i.total_pay}}</td>
+                                      <td>
+                                        <select class="status-select" data-order-id="{{ i.order_id }}">
+                                            <option value="Chờ Xác nhận" {% if i.status == 'Chờ Xác nhận' %}selected{% endif %}>Chờ Xác nhận</option>
+                                            <option value="Đã xác nhận" {% if i.status == 'Đã xác nhận' %}selected{% endif %}>Đã xác nhận</option>
+                                            <option value="Đang giao hàng" {% if i.status == 'Đang giao hàng' %}selected{% endif %}>Đang giao hàng</option>
+                                            <option value="Đã giao hàng" {% if i.status == 'Đã giao hàng' %}selected{% endif %}>Đã giao hàng</option>
+                                        </select>
+                                      </td>
+                                      <td>{{i.payment_type}}</td>
+                                      <td>
+                                        <a class="ms-2" href="{% url 'delete_order_page' pk=i.order_id %}">
+                                          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="red" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                                        </a>
+                                      </td>
+                                  </tr>
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <div class="pagination">
+    <nav aria-label="Page navigation example" class="step-links">
+        <ul class="pagination justify-content-center">
+            {% if orders.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'page_order' %}?page=1">Trang Đầu</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'page_order' %}?page={{orders.previous_page_number }}">Ngược Lại</a>
+                </li>
+            {% endif %}
+                <li class="page-item">
+                    <span class="page-link current">{{ orders.number }} / {{ orders.paginator.num_pages }}</span>
+                </li>
+            {% if orders.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'page_order' %}?page={{orders.next_page_number }}">Tiếp Theo</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'page_order' %}?page={{ orders.paginator.num_pages }}">Trang Cuối</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.status-select').change(function() {
+            var status = $(this).val();
+            var orderId = $(this).data('order-id');
+            var statusCode = '';
+    
+            switch(status) {
+                case 'Chờ Xác nhận':
+                    statusCode = 's1';
+                    break;
+                case 'Đã xác nhận':
+                    statusCode = 's2';
+                    break;
+                case 'Đang giao hàng':
+                    statusCode = 's3';
+                    break;
+                case 'Đã giao hàng':
+                    statusCode = 's4';
+                    break;
+            }
+    
+            // Tạo URL với mã trạng thái và ID đơn hàng
+            var url = '/update-status-order/' + statusCode + '/' + orderId + '/';
+            window.location.href = url;
+        });
+    });
+</script>
+  <!-- Hoverable rows end -->
+
+{% endblock %}

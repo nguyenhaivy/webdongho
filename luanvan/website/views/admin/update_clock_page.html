@@ -1,0 +1,149 @@
+{% extends './base.html' %}
+{% block content %}
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Thêm Sản Phẩm</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <form class="col" method="post" enctype="multipart/form-data" action="{% url 'update_clock_page' pk=obj.clock_id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="basicInput">Tên Đồng Hồ</label>
+                        <input type="text" class="form-control" id="basicInput" name="clock_name" value="{{obj.clock_name}}" placeholder="Nhập tên đồng hồ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helpInputTop">Mô Tả</label>
+                        <textarea type="text" class="form-control" name="describe" value="{{obj.describe}}" id="helpInputTop">{{obj.describe}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helperText">Danh Mục: {{obj.clock_categories.categories_id}}</label>
+                        <select class="form-select" name="categories" aria-label="Default select example">
+                            <option>Chọn Danh Mục</option>
+                            {% for i in list_category %}
+                            <option {% if obj.categories.categories_id == i.categories_id  %}selected{% endif %} value="{{i.categories_id}}">{{i.categories_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="helperText">Nhãn Hiệu</label>
+                        <select class="form-select" name="trademark" aria-label="Default select example">
+                            <option>Chọn Nhãn Hiệu</option>
+                            {% for i in list_trademark %}    
+                            <option {% if obj.trademark.trademark_id == i.trademark_id  %}selected{% endif %} value="{{i.trademark_id}}">{{i.trademark_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helperText">Khoảng giá</label>
+                        <select class="form-select" name="price_limit" aria-label="Default select example">
+                            <option >Chọn Khoảng giá</option>
+                            {% for i in list_price_limit %}
+                            <option {% if obj.price_limit.price_id == i.price_id  %}selected{% endif %} value="{{i.price_id}}">{{i.price_limit_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helperText">Loại Máy</label>
+                        <select class="form-select" name="machine_type" aria-label="Default select example">
+                            <option >Chọn Loại Máy</option>
+                        {% for i in list_machine_type %}   
+                            <option {% if obj.machine_type.machine_type_id == i.machine_type_id  %}selected{% endif %} value="{{i.machine_type_id}}">{{i.machine_type_name}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Vật liệu dây</label>
+                        <select class="form-select" name="wire_material" aria-label="Default select example">
+                            <option selected>Chọn Vật liệu dây</option>
+                            {% for i in list_wire_material %}
+                            <option {% if obj.wire_material.wire_material_id == i.wire_material_id  %}selected{% endif %} value="{{obj.wire_material_id}}">{{i.wire_material_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="helperText">Giá</label>
+                        <input type="text" id="helperText" name="price" value="{{obj.price}}" class="form-control" placeholder="Nhập Giá">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Số lượng</label>
+                        <input type="text" id="helperText" name="quantity" value="{{obj.quantity}}" class="form-control" placeholder="Số lượng">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Giới Tính</label>
+                        <select class="form-select" name="sex" aria-label="Default select example">
+                            <option >Chọn Giới Tính</option>
+                            <option {% if obj.sex == "Nam"  %}selected{% endif %} value="Nam">Nam</option>
+                            <option {% if obj.sex == "Nữ"  %}selected{% endif %} value="Nữ">Nữ</option>
+                            <option {% if obj.sex == "Nam và Nữ"  %}selected{% endif %} value="Nam và Nữ">Nam và Nữ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Thiết Kế</label>
+                        <input type="text" id="helperText" name="designs" value="{{obj.designs}}" class="form-control" placeholder="Nhập Thiết Kế">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Mặt kính</label>
+                        <input type="text" id="helperText" name="glass_surface" value="{{obj.glass_surface}}" class="form-control" placeholder="Nhập Mặt kính">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Đường kính</label>
+                        <input type="text" id="helperText" name="diameter" value="{{obj.diameter}}" class="form-control" placeholder="Nhập Đường kính">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Màu mặt</label>
+                        <input type="text" id="helperText" name="face_color" value="{{obj.face_color}}" class="form-control" placeholder="Nhập Màu mặt">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Chất liệu vỏ</label>
+                        <input type="text" id="helperText" name="shell_material" value="{{obj.shell_material}}" class="form-control" placeholder="Nhập Chất liệu vỏ">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Độ chịu nước</label>
+                        <input type="text" id="helperText" name="water_resistance" value="{{obj.water_resistance}}" class="form-control" placeholder="Nhập">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Tính năng khác</label>
+                        <input type="text" id="helperText" name="other_function" value="{{obj.other_function}}" class="form-control" placeholder="Nhập Tính năng khác">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Xuất sứ thương hiệu</label>
+                        <input type="text" id="helperText" name="brand_origin" value="{{obj.brand_origin}}" class="form-control" placeholder="Nhập Xuất sứ thương hiệu">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Bảo hành chính hãng</label>
+                        <input type="text" id="helperText" name="warranty_genuine" value="{{obj.warranty_genuine}}" class="form-control" placeholder="Nhập Bảo hành chính hãng">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Phần trăm giảm giá</label>
+                        <input type="text" id="helperText" name="percent_discount" value="{{obj.percent_discount}}" class="form-control" placeholder="Nhập Phần trăm giảm giá">
+                    </div>
+                    <div class="form-group">
+                        <label for="helperText">Đường dẫn</label>
+                        <input type="text" id="helperText" name="url" value="{{obj.url}}" class="form-control" placeholder="Nhập Đường dẫn">
+                    </div>
+                    <div class="form-group">
+                        <label for="list_image">Ảnh sản phẩm mới</label>
+                        <input type="file" multiple accept="image/*" class="form-control" id="list_image" name="list_image" >
+                    </div>
+                    <div class="form-group">
+                        <label for="list_video">Video sản phẩm mới</label>
+                        <input type="file" multiple accept="video/*" class="form-control" id="list_video" name="list_video" >
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" >Cập nhật</button>
+                    </div>
+
+                </form> 
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

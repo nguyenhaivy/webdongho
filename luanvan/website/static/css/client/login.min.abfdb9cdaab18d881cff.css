@@ -1,0 +1,259 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0
+}
+
+input[type=number] {
+    -moz-appearance: textfield
+}
+
+body {
+    background-color: #f4f6f9
+}
+
+.wrapper {
+    display: flex
+}
+
+.login {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: ROBOTO LIGHT;
+    width: 100%;
+    margin: 65px 0 105px 0
+}
+
+.login>div {
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, .11);
+    background-color: #fff
+}
+
+.login>div.d1 {
+    padding: 85px 99px
+}
+
+.login>div.d2 {
+    padding: 65px 50px
+}
+
+.login>div>* {
+    display: block;
+    margin-bottom: 25px
+}
+
+.login>div>a {
+    font-size: 14px;
+    color: #666;
+    font-weight: bold
+}
+
+.login>div>a.btnChangeNum {
+    font-size: 13px;
+    color: #288ad6;
+    font-weight: normal
+}
+
+.login>img {
+    max-width: 540px;
+    height: auto
+}
+
+.login>div>span {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.5
+}
+
+.login>div>form>* {
+    display: block;
+    margin: auto;
+    font-family: ROBOTO LIGHT
+}
+
+.login>div>form>.input-area {
+    position: relative;
+    margin-bottom: 15px;
+    width: 302px;
+    max-width: 100%
+}
+
+.login>div>form>.btn {
+    cursor: pointer
+}
+
+.login>div>form input {
+    border: 1px solid #e0e0e0;
+    border-radius: 100px;
+    height: 48px;
+    padding: 0 15px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box
+}
+
+.login>div>form input.error {
+    border: 1px solid #d0021b
+}
+
+.login>div>form>.input-area>.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translate(0, -50%)
+}
+
+.login>div>form>label {
+    color: #f01;
+    margin-bottom: 15px;
+    max-width: 302px;
+    font-weight: 600;
+    font-size: 13px
+}
+
+.login>div.d2>span {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px
+}
+
+.login>div.d2>span.s1,
+.login>div.d2>span.s2 {
+    text-align: left;
+    font-size: 17px;
+    max-width: 405px
+}
+
+.login>div.d2>span.s1>a {
+    color: #246fdb;
+    font-size: 15px
+}
+
+.login>div>span>b {
+    font-family: ROBOTO BOLD
+}
+
+.login>div.d2>form>.input-area>input {
+    padding: 0 45px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 16px;
+    word-spacing: 16px;
+    font-size: 20px;
+    font-weight: 500;
+    box-sizing: border-box
+}
+
+.login input::placeholder {
+    font-size: 14px;
+    color: #999;
+    font-weight: normal;
+    letter-spacing: normal !important;
+    word-spacing: normal !important
+}
+
+.login a.resend-sms {
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.login .resend-sms_v2 {
+    display: none;
+    flex-flow: column;
+    gap: 10px
+}
+
+.login .resend-sms_v2 p {
+    line-height: 150%
+}
+
+.login .resend-sms_v2 a {
+    border: 1px solid #288ad6;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #288ad6;
+    box-sizing: border-box;
+    margin: 0 5px
+}
+
+.login .resend-sms_v2 a:hover {
+    background: #288ad6;
+    color: #fff
+}
+
+.btn {
+    background-color: var(--mainColor);
+    box-shadow: unset;
+    border-radius: 100px;
+    width: 302px;
+    height: 50px;
+    border: none;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 17px;
+    max-width: 100%
+}
+
+@media screen and (max-width:640px) {
+    body {
+        background-color: #fff
+    }
+
+    .wrapper {
+        max-width: 640px !important;
+        position: relative
+    }
+
+    .login {
+        margin: 20px auto;
+        width: calc(100% - 30px)
+    }
+
+    .login>div.d1 {
+        width: 100%;
+        border: none;
+        padding: 100px 20px 80px 20px;
+        margin-top: 80px
+    }
+
+    .login>div.d2 {
+        width: 100%;
+        border: none;
+        padding: 40px 15px
+    }
+
+    .login>div.d2>span {
+        max-width: 302px
+    }
+
+    .login>img {
+        position: absolute;
+        max-width: 360px;
+        height: 180px;
+        top: 0
+    }
+}
+
+@media screen and (max-width:353px) {
+    .login {
+        width: 100%
+    }
+
+    .login>div.d1,
+    .login>div.d2 {
+        padding-left: 0;
+        padding-right: 0
+    }
+
+    .login input::placeholder {
+        font-size: 13px
+    }
+
+    .login>div.d2>span.s1 {
+        text-align: center
+    }
+}
